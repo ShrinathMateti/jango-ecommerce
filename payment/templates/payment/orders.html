@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+<!-- content -->
+{% block content %}
+
+<div class="container mt-2 mb-5">
+  <div class="container">
+    <div class="row mt-5 mb-5">
+      <div class="col-md-12 mb-5">
+        <center>
+          <div class="card">
+            <div class="card-header">
+              Order {{order.id}} ₹{{order.amount_paid}}
+            </div>
+            <div class="card-body">
+              Email:{{order.email}}
+              <br />
+              <br />
+
+              {% if order.date_shipped %} Date Shipped :{{order.date_shipped}}
+              <br />
+              <br />
+
+              {% else %} Date Ordered :{{order.date_ordered}}
+              <br />
+              <br />
+
+              {% endif %} Full Name:{{order.full_name}}
+              <br />
+              <br />
+
+              Shipping Address: {{order.shipping_address}}
+
+              <br />
+
+              {% for item in items %}
+              <br />
+              {{item.product}} - {{item.quantity}} - ₹{{item.price}}
+              <br />
+              {% endfor %}
+            </div>
+          </div>
+          <br />
+          <br />
+          {% if not order.shipped %}
+          <form method="post">
+            {% csrf_token %}
+            <!--  -->
+            <input type="hidden" name="shipping_status" value="true" />
+            <button type="submit" class="btn btn-success">
+              Mark as Shipped
+            </button>
+          </form>
+          {% else %}
+          <!-- not shipped -->
+          <form method="post">
+            {% csrf_token %}
+            <!--  -->
+            <input type="hidden" name="shipping_status" value="false" />
+            <button type="submit" class="btn btn-danger">
+              Mark as Un-Shipped
+            </button>
+          </form>
+          {% endif %}
+
+          <!-- <a href="{% url 'shipped_dash' %}" class="btn btn-primary"
+            >Go somewhere</a
+          > -->
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+{% endblock %}
